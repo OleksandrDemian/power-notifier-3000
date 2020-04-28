@@ -1,5 +1,5 @@
-var container = require("./container");
-var card = require("./card");
+const container = require("./container");
+const card = require("./card");
 
 module.exports = {
 	container,
