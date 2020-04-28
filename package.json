@@ -1,0 +1,14 @@
+{
+  "name": "power-notifier-3000",
+  "version": "1.0.0",
+  "description": "POWER NOTIFIER 3000",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "notifications"
+  ],
+  "author": "Oleksandr Demian",
+  "license": "ISC"
+}
