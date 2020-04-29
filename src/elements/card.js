@@ -12,15 +12,36 @@ const DEFAULT_CSS = {
 	width: "90%"
 };
 
-function createCard({ title, message, timeout, internalIndex, css = null, onStateUpdate }) {
+function createHeader(title) {
 	const div = document.createElement("div");
-	const headerEle = document.createElement("h3");
-	const buttonEle = document.createElement("button");
+	const h3 = document.createElement("h3");
+	
+	div.style.borderBottom = "1px solid grey";
+	
+	h3.innerText = title;
+	div.appendChild(h3);
+	
+	return div;
+}
+
+function createCard({ title, message, timeout, internalIndex, css = null, onStateUpdate }) {
+	let timeoutId = null;
+	const div = document.createElement("div");
+	const headerEle = createHeader(title);
 	const textEle = document.createElement("p");
 	
-	let timeoutId = null;
-	
 	div.id = "power-notifier-3000-element-" + internalIndex;
+	div.onclick = function (e) {
+		e.preventDefault();
+		e.stopPropagation();
+		
+		if(timeoutId != null){
+			clearTimeout(timeoutId);
+		}
+		
+		div.remove();
+		onStateUpdate(NotificationState.CLOSED);
+	};
 	
 	utils.applyCss(div, DEFAULT_CSS);
 	if(css != null){
@@ -34,19 +55,7 @@ function createCard({ title, message, timeout, internalIndex, css = null, onStat
 		}, timeout);
 	}
 	
-	headerEle.innerText = title;
 	div.appendChild(headerEle);
-	
-	buttonEle.onclick = function (e) {
-		if(timeoutId != null){
-			clearTimeout(timeoutId);
-		}
-		
-		div.remove();
-		onStateUpdate(NotificationState.CLOSED);
-	};
-	buttonEle.innerText = "Close";
-	div.appendChild(buttonEle);
 	
 	textEle.innerText = message;
 	div.appendChild(textEle);
