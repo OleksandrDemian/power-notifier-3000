@@ -25,6 +25,60 @@ function has(name){
 	return false;
 }
 
-module.exports.add = add;
+function merge(name, style){
+	if(has(name)){
+		for(let i = 0; i < styles.length; i++){
+			if(styles[i].name === name){
+				styles[i].style = style;
+				break;
+			}
+		}
+	} else {
+		add(name, style);
+	}
+}
+
+/**
+ * CREATE DEFAULT STYLES
+ */
+
+add("warn", {
+	header: {
+		backgroundColor: "orange",
+		color: "white",
+		textAlign: "center"
+	},
+	content: {
+		backgroundColor: "white",
+		color: "orange",
+		border: "1px solid orange"
+	}
+});
+add("success", {
+	header: {
+		backgroundColor: "mediumseagreen",
+		color: "white",
+		textAlign: "center"
+	},
+	content: {
+		backgroundColor: "white",
+		color: "mediumseagreen",
+		border: "1px solid mediumseagreen"
+	}
+});
+add("error", {
+	header: {
+		backgroundColor: "tomato",
+		color: "white",
+		textAlign: "center"
+	},
+	content: {
+		backgroundColor: "white",
+		color: "tomato",
+		border: "1px solid tomato"
+	}
+});
+
+module.exports.add = merge;
 module.exports.get = get;
 module.exports.has = has;

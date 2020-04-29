@@ -3,9 +3,8 @@ const utils = require("../utils");
 const DEFAULT_CSS = {
 	position: "fixed",
 	right: "0px",
-	top: "0px",
+	bottom: "0px",
 	width: "20vw",
-	height: "100%",
 	display: "flex",
 	flexDirection: "column-reverse",
 	overflowY: "hidden"

@@ -7,8 +7,6 @@ const DEFAULT_CSS = {
 	marginBottom: "5px",
 	marginLeft: "auto",
 	marginRight: "auto",
-	border: "1px solid black",
-	boxShadow: "2px 2px grey",
 	width: "90%"
 };
 
@@ -16,10 +14,11 @@ function createHeader(title, customCss = null) {
 	const div = document.createElement("div");
 	const h3 = document.createElement("h3");
 	
-	div.style.borderBottom = "1px solid grey";
 	div.style.padding = "5px";
+	div.classList.add("pwn3-header-box");
 	
 	h3.innerText = title;
+	h3.classList.add("pwn3-header-text");
 	div.appendChild(h3);
 	
 	if(customCss !== null && customCss.header){
@@ -33,6 +32,9 @@ function createContent(message, customCss = null) {
 	const div = document.createElement("div");
 	const textEle = document.createElement("p");
 	
+	div.classList.add("pwn3-content-box");
+	textEle.classList.add("pwn3-content-text");
+	
 	div.style.padding = "5px";
 	textEle.innerText = message;
 	
@@ -45,14 +47,14 @@ function createContent(message, customCss = null) {
 	return div;
 }
 
-function createCard({ title = null, message = null, timeout, internalIndex, applyStyle = null, onStateUpdate }) {
+function createCard({ title = null, message = null, timeout, internalIndex, applyStyle = null, onStateUpdate = null }) {
 	let timeoutId = null;
 	const div = document.createElement("div");
 	
 	const customCss = applyStyle ? stylesRepo.get(applyStyle) : null;
 	
-	div.id = "power-notifier-3000-element-" + internalIndex;
-	div.classList.add("power-notifier-3000-container");
+	div.id = "pwn3-element-" + internalIndex;
+	div.classList.add("pwn3-container");
 	
 	// close notification on click
 	div.onclick = function (e) {
@@ -64,13 +66,17 @@ function createCard({ title = null, message = null, timeout, internalIndex, appl
 		}
 		
 		div.remove();
-		onStateUpdate(NotificationState.CLOSED);
+		if(onStateUpdate !== null){
+			onStateUpdate(NotificationState.CLOSED);
+		}
 	};
 	
 	if(timeout != null){
 		timeoutId = setTimeout(function () {
 			div.remove();
-			onStateUpdate(NotificationState.TIME_OUT);
+			if(onStateUpdate !== null){
+				onStateUpdate(NotificationState.TIME_OUT);
+			}
 		}, timeout);
 	}
 	
