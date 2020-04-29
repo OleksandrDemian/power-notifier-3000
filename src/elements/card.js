@@ -1,15 +1,18 @@
 const utils = require("../utils");
+const NotificationState = require("../enum/NotificationState");
 
 const DEFAULT_CSS = {
 	marginTop: "5px",
 	marginBottom: "5px",
+	marginLeft: "auto",
+	marginRight: "auto",
 	padding: "5px",
 	border: "1px solid black",
-	boxShadow: "5px 5px grey",
+	boxShadow: "2px 2px grey",
 	width: "90%"
 };
 
-function createCard({ title, message, timeout, internalIndex, css = null }) {
+function createCard({ title, message, timeout, internalIndex, css = null, onStateUpdate }) {
 	const div = document.createElement("div");
 	const headerEle = document.createElement("h3");
 	const buttonEle = document.createElement("button");
@@ -27,6 +30,7 @@ function createCard({ title, message, timeout, internalIndex, css = null }) {
 	if(timeout != null){
 		timeoutId = setTimeout(function () {
 			div.remove();
+			onStateUpdate(NotificationState.TIME_OUT);
 		}, timeout);
 	}
 	
@@ -39,6 +43,7 @@ function createCard({ title, message, timeout, internalIndex, css = null }) {
 		}
 		
 		div.remove();
+		onStateUpdate(NotificationState.CLOSED);
 	};
 	buttonEle.innerText = "Close";
 	div.appendChild(buttonEle);

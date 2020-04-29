@@ -1,7 +1,7 @@
 const utils = require("../utils");
 
 const DEFAULT_CSS = {
-	position: "absolute",
+	position: "fixed",
 	right: "0px",
 	top: "0px",
 	width: "20vw",

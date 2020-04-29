@@ -1,4 +1,5 @@
 const elements = require("./elements");
+const NotificationState = require("./enum/NotificationState");
 
 let _init = false;
 let _container = null;
@@ -10,7 +11,7 @@ function init() {
 	_init = true;
 }
 
-function notify({ title, message, timeout, css }){
+function notify({ title, message, timeout, css, onStateUpdate }){
 	if(!_init){
 		init();
 	}
@@ -20,12 +21,14 @@ function notify({ title, message, timeout, css }){
 		message,
 		timeout,
 		css,
+		onStateUpdate,
 		internalIndex: _counter++
 	});
 	_container.appendChild(card);
+	onStateUpdate(NotificationState.SHOWN);
 }
 
 module.exports = {
-	init,
-	notify
+	notify,
+	NotificationState
 };
