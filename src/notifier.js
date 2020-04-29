@@ -1,5 +1,6 @@
 const elements = require("./elements");
 const NotificationState = require("./enum/NotificationState");
+const stylesRepo = require("./stylesRepo");
 
 let _init = false;
 let _container = null;
@@ -11,7 +12,7 @@ function init() {
 	_init = true;
 }
 
-function notify({ title, message, timeout, css, onStateUpdate }){
+function notify({ title, message, timeout, applyStyle, onStateUpdate }){
 	if(!_init){
 		init();
 	}
@@ -20,7 +21,7 @@ function notify({ title, message, timeout, css, onStateUpdate }){
 		title,
 		message,
 		timeout,
-		css,
+		applyStyle,
 		onStateUpdate,
 		internalIndex: _counter++
 	});
@@ -28,7 +29,12 @@ function notify({ title, message, timeout, css, onStateUpdate }){
 	onStateUpdate(NotificationState.SHOWN);
 }
 
+function createStyle(name, style){
+	stylesRepo.add(name, style);
+}
+
 module.exports = {
 	notify,
-	NotificationState
+	NotificationState,
+	createStyle
 };
