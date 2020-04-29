@@ -42,6 +42,19 @@ function merge(name, style){
  * CREATE DEFAULT STYLES
  */
 
+add("default", {
+	header: {
+		backgroundColor: "#6495ED",
+		color: "white",
+		textAlign: "center"
+	},
+	content: {
+		backgroundColor: "white",
+		color: "#6495ED",
+		border: "1px solid #6495ED"
+	}
+});
+
 add("warn", {
 	header: {
 		backgroundColor: "orange",

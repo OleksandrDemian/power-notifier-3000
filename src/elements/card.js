@@ -47,7 +47,7 @@ function createContent(message, customCss = null) {
 	return div;
 }
 
-function createCard({ title = null, message = null, timeout, internalIndex, applyStyle = null, onStateUpdate = null }) {
+function createCard({ title = null, message = null, timeout, internalIndex, applyStyle = "default", onStateUpdate = null }) {
 	let timeoutId = null;
 	const div = document.createElement("div");
 	
