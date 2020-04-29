@@ -1,5 +1,5 @@
 const elements = require("./elements");
-const NotificationState = require("./enum/NotificationState");
+const NotificationUpdate = require("./enum/NotificationUpdate");
 const stylesRepo = require("./stylesRepo");
 
 let _init = false;
@@ -27,7 +27,7 @@ function notify({ title, message, timeout, applyStyle, onStateUpdate = null }){
 	});
 	_container.appendChild(card);
 	if(onStateUpdate !== null){
-		onStateUpdate(NotificationState.SHOWN);
+		onStateUpdate(NotificationUpdate.SHOWN);
 	}
 }
 
@@ -37,6 +37,6 @@ function createStyle(name, style){
 
 module.exports = {
 	notify,
-	NotificationState,
+	NotificationUpdate,
 	createStyle
 };

@@ -1,5 +1,5 @@
 const utils = require("../utils");
-const NotificationState = require("../enum/NotificationState");
+const NotificationUpdate = require("../enum/NotificationUpdate");
 const stylesRepo = require("../stylesRepo");
 
 const DEFAULT_CSS = {
@@ -67,7 +67,7 @@ function createCard({ title = null, message = null, timeout, internalIndex, appl
 		
 		div.remove();
 		if(onStateUpdate !== null){
-			onStateUpdate(NotificationState.CLOSED);
+			onStateUpdate(NotificationUpdate.CLOSED);
 		}
 	};
 	
@@ -75,7 +75,7 @@ function createCard({ title = null, message = null, timeout, internalIndex, appl
 		timeoutId = setTimeout(function () {
 			div.remove();
 			if(onStateUpdate !== null){
-				onStateUpdate(NotificationState.TIME_OUT);
+				onStateUpdate(NotificationUpdate.TIME_OUT);
 			}
 		}, timeout);
 	}
