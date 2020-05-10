@@ -47,7 +47,48 @@ function createContent(message, customCss = null) {
 	return div;
 }
 
-function createCard({ title = null, message = null, timeout, internalIndex, applyStyle = "default", onStateUpdate = null }) {
+function createButtons(buttons, css, onStateUpdate) {
+	const div = document.createElement("div");
+	
+	for(let i = 0; i < buttons.length; i++){
+		const button = document.createElement("div");
+		
+		div.classList.add("pwn3-buttons-box");
+		button.classList.add("pwn3-buttons-button");
+		
+		div.style.display = "flex";
+		
+		button.innerText = buttons[i].text;
+		button.style.flex = "1";
+		button.style.padding = "10px";
+		button.style.textAlign = "center";
+		button.style.textTransform = "uppercase";
+		button.style.cursor = "pointer";
+		
+		button.onclick = function(e){
+			e.preventDefault();
+			e.stopPropagation();
+			
+			if(onStateUpdate){
+				onStateUpdate(buttons[i].action);
+			}
+		};
+		
+		if(css && css.button){
+			utils.applyCss(button, css.button);
+		}
+		
+		div.appendChild(button);
+	}
+	
+	if(css && css.buttonsSection){
+		utils.applyCss(div, css.buttonsSection);
+	}
+	
+	return div;
+}
+
+function createCard({ title = null, message = null, timeout, internalIndex, applyStyle = "default", onStateUpdate = null, buttons = null }) {
 	let timeoutId = null;
 	const div = document.createElement("div");
 	
@@ -90,6 +131,10 @@ function createCard({ title = null, message = null, timeout, internalIndex, appl
 	if(message !== null){
 		const contentEle = createContent(message, customCss);
 		div.appendChild(contentEle);
+	}
+	
+	if(buttons){
+		div.appendChild(createButtons(buttons, customCss, onStateUpdate));
 	}
 	
 	// apply css to the container

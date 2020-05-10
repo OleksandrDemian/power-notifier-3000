@@ -12,7 +12,7 @@ function init() {
 	_init = true;
 }
 
-function notify({ title, message, timeout, applyStyle, onStateUpdate = null }){
+function notify({ title, message, timeout, applyStyle, onStateUpdate = null, buttons }){
 	if(!_init){
 		init();
 	}
@@ -23,6 +23,7 @@ function notify({ title, message, timeout, applyStyle, onStateUpdate = null }){
 		timeout,
 		applyStyle,
 		onStateUpdate,
+		buttons,
 		internalIndex: _counter++
 	});
 	_container.appendChild(card);

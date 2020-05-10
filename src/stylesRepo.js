@@ -52,6 +52,10 @@ add("default", {
 		backgroundColor: "white",
 		color: "#6495ED",
 		border: "1px solid #6495ED"
+	},
+	button: {
+		backgroundColor: "#6495ED",
+		color: "white"
 	}
 });
 
@@ -65,6 +69,10 @@ add("warn", {
 		backgroundColor: "white",
 		color: "orange",
 		border: "1px solid orange"
+	},
+	button: {
+		backgroundColor: "orange",
+		color: "white"
 	}
 });
 add("success", {
@@ -77,6 +85,10 @@ add("success", {
 		backgroundColor: "white",
 		color: "mediumseagreen",
 		border: "1px solid mediumseagreen"
+	},
+	button: {
+		backgroundColor: "mediumseagreen",
+		color: "white"
 	}
 });
 add("error", {
@@ -89,6 +101,11 @@ add("error", {
 		backgroundColor: "white",
 		color: "tomato",
 		border: "1px solid tomato"
+	},
+	button: {
+		backgroundColor: "tomato",
+		color: "white",
+		fontWeight: "bold"
 	}
 });
 
