@@ -1,5 +1,6 @@
 const utils = require("../utils");
 const NotificationUpdate = require("../enum/NotificationUpdate");
+const Notification = require("../Notification");
 const stylesRepo = require("../stylesRepo");
 
 const DEFAULT_CSS = {
@@ -47,7 +48,7 @@ function createContent(message, customCss = null) {
 	return div;
 }
 
-function createButtons(buttons, css, onStateUpdate) {
+function createButtons(buttons, css, notification) {
 	const div = document.createElement("div");
 	
 	for(let i = 0; i < buttons.length; i++){
@@ -69,9 +70,7 @@ function createButtons(buttons, css, onStateUpdate) {
 			e.preventDefault();
 			e.stopPropagation();
 			
-			if(onStateUpdate){
-				onStateUpdate(buttons[i].action);
-			}
+			notification.close(buttons[i].action);
 		};
 		
 		if(css && css.button){
@@ -88,9 +87,22 @@ function createButtons(buttons, css, onStateUpdate) {
 	return div;
 }
 
-function createCard({ title = null, message = null, timeout, internalIndex, applyStyle = "default", onStateUpdate = null, buttons = null }) {
+/**
+ *
+ * @param title
+ * @param message
+ * @param timeout
+ * @param internalIndex
+ * @param applyStyle
+ * @param onStateUpdate
+ * @param buttons
+ * @param closeOnClick
+ * @return {Notification}
+ */
+function createCard({ title = null, message = null, timeout, internalIndex, applyStyle = "default", onStateUpdate = null, buttons = null, closeOnClick = true }) {
 	let timeoutId = null;
 	const div = document.createElement("div");
+	const notification = new Notification({ div, onStateUpdate });
 	
 	const customCss = applyStyle ? stylesRepo.get(applyStyle) : null;
 	
@@ -98,26 +110,22 @@ function createCard({ title = null, message = null, timeout, internalIndex, appl
 	div.classList.add("pwn3-container");
 	
 	// close notification on click
-	div.onclick = function (e) {
-		e.preventDefault();
-		e.stopPropagation();
-		
-		if(timeoutId != null){
-			clearTimeout(timeoutId);
-		}
-		
-		div.remove();
-		if(onStateUpdate !== null){
-			onStateUpdate(NotificationUpdate.CLOSED);
-		}
-	};
+	if(closeOnClick){
+		div.onclick = function (e) {
+			e.preventDefault();
+			e.stopPropagation();
+			
+			if(timeoutId != null){
+				clearTimeout(timeoutId);
+			}
+			
+			notification.close(NotificationUpdate.CLOSED);
+		};
+	}
 	
 	if(timeout != null){
 		timeoutId = setTimeout(function () {
-			div.remove();
-			if(onStateUpdate !== null){
-				onStateUpdate(NotificationUpdate.TIME_OUT);
-			}
+			notification.close(NotificationUpdate.TIME_OUT);
 		}, timeout);
 	}
 	
@@ -134,7 +142,7 @@ function createCard({ title = null, message = null, timeout, internalIndex, appl
 	}
 	
 	if(buttons){
-		div.appendChild(createButtons(buttons, customCss, onStateUpdate));
+		div.appendChild(createButtons(buttons, customCss, notification));
 	}
 	
 	// apply css to the container
@@ -143,7 +151,7 @@ function createCard({ title = null, message = null, timeout, internalIndex, appl
 		utils.applyCss(div, customCss.container);
 	}
 	
-	return div;
+	return notification;
 }
 
 module.exports = createCard;
