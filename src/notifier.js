@@ -20,6 +20,7 @@ function init() {
  * @param applyStyle
  * @param onStateUpdate
  * @param buttons
+ * @param closeOnClick
  * @return {Notification}
  */
 function notify({ title, message, timeout, applyStyle, onStateUpdate = null, buttons, closeOnClick }){
