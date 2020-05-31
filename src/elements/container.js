@@ -7,7 +7,8 @@ const DEFAULT_CSS = () => ({
 	width: "20vw",
 	display: "flex",
 	flexDirection: "column-reverse",
-	overflowY: "hidden"
+	overflowY: "hidden",
+	zIndex: 999
 });
 
 const CSS = () => {
