@@ -1,6 +1,6 @@
 {
   "name": "power-notifier",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "POWER NOTIFIER 3000",
   "main": "index.js",
   "scripts": {
